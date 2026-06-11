@@ -1,0 +1,20 @@
+# Raw private data — never commit
+data/raw/Case Study/
+data/raw/Train*.csv
+data/raw/Test*.csv
+data/raw/Unseen*.csv
+
+# Processed features (auto-generated)
+data/processed/
+
+# Python cache
+__pycache__/
+*.pyc
+.DS_Store
+*.egg-info/
+.env
+
+# Keep models, outputs and reports tracked (needed for Streamlit Cloud)
+# models/*.pkl   ← removed so pkl files ARE committed
+# outputs/*.csv  ← removed so submission files ARE committed
+# reports/*.png  ← removed so charts ARE committed
