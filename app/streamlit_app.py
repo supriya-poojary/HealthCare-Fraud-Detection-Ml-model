@@ -156,12 +156,19 @@ st.markdown("""
     border-bottom: 2px solid #63b3ed !important;
 }
 
-/* Alert boxes */
 .info-box {
     background: rgba(99,179,237,0.1);
     border-left: 4px solid #63b3ed;
     border-radius: 8px; padding: 1rem 1.5rem;
     margin: 1rem 0;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .hero-header { padding: 1.5rem 1rem; }
+    .hero-title { font-size: 1.8rem; }
+    .metric-value { font-size: 1.8rem; }
+    .metric-card { padding: 1rem; margin-bottom: 1rem; }
 }
 </style>
 """, unsafe_allow_html=True)

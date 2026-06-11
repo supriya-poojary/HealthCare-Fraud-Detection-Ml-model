@@ -505,17 +505,37 @@ add_body(doc, "Before SMOTE: {Non-Fraud: 3,923, Fraud: 405}", italic=True)
 add_body(doc, "After SMOTE:  {Non-Fraud: 3,923, Fraud: 3,923}", italic=True)
 doc.add_paragraph()
 
+add_body(doc, "Models Trained and Evaluated", bold=True, size=12)
+add_body(doc, (
+    "To determine the best approach, four different machine learning classification algorithms "
+    "were trained and evaluated using 5-Fold Stratified Cross-Validation on the training data. "
+    "These included Logistic Regression (a linear baseline), Random Forest (an ensemble bagging "
+    "model), XGBoost (an advanced gradient boosting algorithm), and LightGBM (another gradient "
+    "boosting framework)."
+))
+
+doc.add_paragraph()
+
 add_body(doc, "Model Comparison — 5-Fold Cross-Validation Results", bold=True, size=12)
 make_table(doc,
     ["Model", "Mean ROC-AUC", "Std Dev", "Notes"],
     [
         ["Logistic Regression", "0.9189", "±0.013", "Linear baseline — limited for non-linear fraud patterns"],
         ["Random Forest", "0.9457", "±0.008", "Strong ensemble model — good non-linear pattern detection"],
-        ["XGBoost ⭐ SELECTED", "0.9492", "±0.007", "Best balance of performance and interpretability"],
-        ["LightGBM", "0.9493", "±0.005", "Marginally better AUC but less widely supported in production"],
+        ["XGBoost ⭐ SELECTED", "0.9492", "±0.007", "Best balance of performance, speed, and interpretability"],
+        ["LightGBM", "0.9493", "±0.005", "Marginally better AUC but less widely supported in production workflows"],
     ],
     col_widths=[2.0, 1.5, 1.0, 2.5]
 )
+
+add_body(doc, "Why XGBoost Was Selected", bold=True, size=12, color="1F3864")
+add_bullet(doc, "Performance: It achieved near-top cross-validation ROC-AUC (0.9492), proving its high accuracy.")
+add_bullet(doc, "Imbalance Handling: Built-in parameters like 'scale_pos_weight' effectively handle the 9% fraud class imbalance without heavily relying only on SMOTE.")
+add_bullet(doc, "Non-Linear Patterns: Fraud patterns are highly non-linear and complex, which XGBoost models natively capture better than linear models.")
+add_bullet(doc, "Feature Importance: It provides clear internal feature importance metrics, which is crucial for explaining fraud alerts to insurance investigators.")
+add_bullet(doc, "Industry Standard: XGBoost is a proven, production-ready algorithm widely adopted by banks and insurance companies for fraud detection.")
+
+doc.add_paragraph()
 
 add_body(doc, "Final Model — XGBoost Configuration", bold=True, size=12)
 make_table(doc,
