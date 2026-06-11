@@ -305,6 +305,20 @@ cells = [
             "3. **Rotating Networks**: Flag providers coordinating with unusually large or highly variable circles of attending/operating physicians.\n",
             "4. **Deceased Beneficiary Claims**: Implement automatic checks against SSA records before claims payout."
         ]
+    },
+    # References
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "## 📚 References and Citations\n",
+            "\n",
+            "1. **XGBoost Documentation**: Chen, T., & Guestrin, C. (2016). XGBoost: A Scalable Tree Boosting System. [https://xgboost.readthedocs.io/](https://xgboost.readthedocs.io/)\n",
+            "2. **SMOTE (Synthetic Minority Over-sampling Technique)**: Chawla, N. V., Bowyer, K. W., Hall, L. O., & Kegelmeyer, W. P. (2002). SMOTE: synthetic minority over-sampling technique. Journal of artificial intelligence research, 16, 321-357.\n",
+            "3. **Scikit-Learn Documentation**: Pedregosa et al., (2011). Scikit-learn: Machine Learning in Python, JMLR 12, pp. 2825-2830. [https://scikit-learn.org/](https://scikit-learn.org/)\n",
+            "4. **Pandas Documentation**: The pandas development team (2020). pandas-dev/pandas: Pandas. Zenodo. [https://pandas.pydata.org/](https://pandas.pydata.org/)\n",
+            "5. **Domain Knowledge (Healthcare Fraud)**: Understanding Upcoding, Unbundling, and Medicare Fraud from Centers for Medicare & Medicaid Services (CMS). [https://www.cms.gov/](https://www.cms.gov/)"
+        ]
     }
 ]
 
