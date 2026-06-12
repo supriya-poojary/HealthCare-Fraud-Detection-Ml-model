@@ -19,22 +19,22 @@ from plotly.subplots import make_subplots
 import streamlit as st
 warnings.filterwarnings('ignore')
 
-# ── Path setup ──────────────────────────────────────────────────────────────
+# Path setup
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE, 'notebooks'))
 MODELS_DIR  = os.path.join(BASE, 'models')
 REPORTS_DIR = os.path.join(BASE, 'reports')
 OUTPUTS_DIR = os.path.join(BASE, 'outputs')
 
-# ── Page config ─────────────────────────────────────────────────────────────
+# Page config
 st.set_page_config(
     page_title  = "Healthcare Fraud Detector",
-    page_icon   = "🏥",
+    page_icon   = "⚕️",
     layout      = "wide",
     initial_sidebar_state = "expanded",
 )
 
-# ── Custom CSS ───────────────────────────────────────────────────────────────
+# Custom CSS
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
@@ -174,7 +174,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# ── Load artifacts ──────────────────────────────────────────────────────────
+# Load artifacts
 @st.cache_resource(show_spinner="Loading model artifacts…")
 def load_artifacts():
     artifact_path = os.path.join(MODELS_DIR, 'pipeline_artifacts.pkl')
@@ -193,7 +193,7 @@ artifacts   = load_artifacts()
 submission  = load_submission()
 
 
-# ── Sidebar ──────────────────────────────────────────────────────────────────
+# Sidebar
 with st.sidebar:
     st.markdown("""
     <div style='text-align:center; padding: 1rem 0;'>
@@ -206,9 +206,9 @@ with st.sidebar:
 
     page = st.selectbox(
         "Navigate",
-        ["🏠 Overview", "📊 EDA & Insights", "🤖 Model Results",
-         "🎯 Live Prediction", "📁 Submission", "💡 Business Insights",
-         "📖 Documentation"],
+        ["Overview", "EDA & Insights", "Model Results",
+         "Live Prediction", "Submission", "Business Insights",
+         "Documentation"],
         label_visibility="collapsed"
     )
     st.markdown("<hr style='border-color: rgba(99,179,237,0.2);'>", unsafe_allow_html=True)
@@ -227,15 +227,13 @@ with st.sidebar:
         st.warning("⚠️ Run the pipeline first:\n```\npython notebooks/run_pipeline.py\n```")
 
 
-# ════════════════════════════════════════════════════════════════════════════
 #  PAGE: OVERVIEW
-# ════════════════════════════════════════════════════════════════════════════
-if page == "🏠 Overview":
+if page == "Overview":
     st.markdown("""
     <div class='hero-header'>
-        <div class='hero-title'>🏥 Healthcare Provider Fraud Detection</div>
+        <div class='hero-title'>⚕️ Healthcare Provider Fraud Detection</div>
         <div class='hero-sub'>
-            AI-powered Insurance Claims Analysis · XGBoost + SMOTE · ROC-AUC Optimized
+            Machine Learning Insurance Claims Analysis · XGBoost + SMOTE · ROC-AUC Optimized
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -261,7 +259,7 @@ if page == "🏠 Overview":
     # Problem statement
     col_l, col_r = st.columns([1.2, 1])
     with col_l:
-        st.markdown("<div class='section-header'>📋 Problem Statement</div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'>Problem Statement</div>", unsafe_allow_html=True)
         st.markdown("""
         <div class='info-box'>
         Healthcare fraud is one of the most costly problems in the insurance industry.
@@ -273,7 +271,7 @@ if page == "🏠 Overview":
         </div>
         """, unsafe_allow_html=True)
 
-        st.markdown("<div class='section-header'>🔄 Methodology</div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'>Methodology</div>", unsafe_allow_html=True)
         steps = [
             ("1️⃣", "Data Management", "Load & clean 8 CSV files, parse dates, encode categories"),
             ("2️⃣", "EDA", "Visualize fraud patterns, class imbalance, claim distributions"),
@@ -293,7 +291,7 @@ if page == "🏠 Overview":
             </div>""", unsafe_allow_html=True)
 
     with col_r:
-        st.markdown("<div class='section-header'>⚠️ Types of Fraud Detected</div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'>Types of Fraud Detected</div>", unsafe_allow_html=True)
         fraud_types = [
             ("💉", "Phantom Billing", "Billing for services never provided"),
             ("📋", "Duplicate Claims", "Submitting same claim multiple times"),
@@ -309,7 +307,7 @@ if page == "🏠 Overview":
                 <span style='color:#a0aec0; font-size:0.85rem;'>{desc}</span>
             </div>""", unsafe_allow_html=True)
 
-        st.markdown("<div class='section-header'>🛠 Tech Stack</div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'>Tech Stack</div>", unsafe_allow_html=True)
         techs = ["Python 3.13", "XGBoost", "LightGBM", "Scikit-Learn",
                  "SMOTE", "SHAP", "Plotly", "Streamlit"]
         cols = st.columns(4)
@@ -322,11 +320,9 @@ if page == "🏠 Overview":
             </div>""", unsafe_allow_html=True)
 
 
-# ════════════════════════════════════════════════════════════════════════════
 #  PAGE: EDA
-# ════════════════════════════════════════════════════════════════════════════
-elif page == "📊 EDA & Insights":
-    st.markdown("<div class='section-header'>📊 Exploratory Data Analysis</div>", unsafe_allow_html=True)
+elif page == "EDA & Insights":
+    st.markdown("<div class='section-header'>Exploratory Data Analysis</div>", unsafe_allow_html=True)
 
     eda_img = os.path.join(REPORTS_DIR, 'eda_overview.png')
     corr_img = os.path.join(REPORTS_DIR, 'correlation_heatmap.png')
@@ -362,10 +358,8 @@ elif page == "📊 EDA & Insights":
     st.plotly_chart(fig, use_container_width=True)
 
 
-# ════════════════════════════════════════════════════════════════════════════
 #  PAGE: MODEL RESULTS
-# ════════════════════════════════════════════════════════════════════════════
-elif page == "🤖 Model Results":
+elif page == "Model Results":
     st.markdown("<div class='section-header'>🤖 Model Training Results</div>", unsafe_allow_html=True)
 
     if artifacts:
@@ -428,10 +422,8 @@ elif page == "🤖 Model Results":
         st.warning("⚠️ No model artifacts found. Run the pipeline first.")
 
 
-# ════════════════════════════════════════════════════════════════════════════
 #  PAGE: LIVE PREDICTION
-# ════════════════════════════════════════════════════════════════════════════
-elif page == "🎯 Live Prediction":
+elif page == "Live Prediction":
     st.markdown("<div class='section-header'>🎯 Live Provider Fraud Prediction</div>",
                 unsafe_allow_html=True)
 
@@ -573,10 +565,8 @@ elif page == "🎯 Live Prediction":
                                "batch_predictions.csv", "text/csv")
 
 
-# ════════════════════════════════════════════════════════════════════════════
 #  PAGE: SUBMISSION
-# ════════════════════════════════════════════════════════════════════════════
-elif page == "📁 Submission":
+elif page == "Submission":
     st.markdown("<div class='section-header'>📁 Submission File</div>", unsafe_allow_html=True)
 
     if submission is not None:
@@ -628,10 +618,8 @@ elif page == "📁 Submission":
         st.warning("⚠️ No submission file found. Run the pipeline first.")
 
 
-# ════════════════════════════════════════════════════════════════════════════
 #  PAGE: BUSINESS INSIGHTS
-# ════════════════════════════════════════════════════════════════════════════
-elif page == "💡 Business Insights":
+elif page == "Business Insights":
     st.markdown("<div class='section-header'>💡 Business Recommendations</div>",
                 unsafe_allow_html=True)
 
@@ -752,7 +740,7 @@ elif page == "💡 Business Insights":
             <span style='color:#cbd5e0; font-size:0.9rem;'>{lim}</span>
         </div>""", unsafe_allow_html=True)
 
-elif page == "📖 Documentation":
+elif page == "Documentation":
     st.markdown("<div class='section-header'>📖 Documentation & Technical Methodology</div>", unsafe_allow_html=True)
     
     tab_clean, tab_feat, tab_model, tab_run = st.tabs([
@@ -897,7 +885,7 @@ st.markdown("""
 <div style='text-align:center; color:#4a5568; font-size:0.8rem;
             margin-top:3rem; padding:1.5rem;
             border-top: 1px solid rgba(99,179,237,0.1);'>
-    🏥 Healthcare Provider Fraud Detection | Built with XGBoost + Streamlit<br>
+    ⚕️ Healthcare Provider Fraud Detection | Built with XGBoost + Streamlit<br>
     <i>Data is confidential — not shared or published</i>
 </div>
 """, unsafe_allow_html=True)

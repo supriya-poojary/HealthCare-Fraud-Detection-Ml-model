@@ -34,18 +34,14 @@ print("\n" + "="*60)
 print("  HEALTHCARE PROVIDER FRAUD DETECTION  * Full Pipeline")
 print("="*60)
 
-# ══════════════════════════════════════════════════════════════
 # STEP 1 — DATA LOADING
-# ══════════════════════════════════════════════════════════════
 print("\n[STEP 1] Data Loading *")
 (train_labels, test_labels,
  train_bene,   test_bene,
  train_inpat,  test_inpat,
  train_outpat, test_outpat) = load_all()
 
-# ══════════════════════════════════════════════════════════════
 # STEP 2 — CLEANING
-# ══════════════════════════════════════════════════════════════
 print("\n[STEP 2] Cleaning *")
 train_bene   = clean_beneficiary(train_bene)
 test_bene    = clean_beneficiary(test_bene)
@@ -55,9 +51,7 @@ train_outpat = clean_claims(train_outpat, 'OP')
 test_outpat  = clean_claims(test_outpat,  'OP')
 print("  * Cleaning done.")
 
-# ══════════════════════════════════════════════════════════════
 # STEP 3 — FEATURE ENGINEERING
-# ══════════════════════════════════════════════════════════════
 print("\n[STEP 3] Feature Engineering *")
 print("  * Train features")
 train_feats = build_provider_features(train_inpat, train_outpat, train_bene)
@@ -88,9 +82,7 @@ train_df.to_csv(os.path.join(PROC, 'train_features.csv'), index=False)
 test_feats.to_csv(os.path.join(PROC, 'test_features.csv'), index=False)
 print("  * Features saved to data/processed/")
 
-# ══════════════════════════════════════════════════════════════
 # STEP 2b — EDA PLOTS
-# ══════════════════════════════════════════════════════════════
 print("\n[STEP 2b] Generating EDA Plots *")
 
 fig, axes = plt.subplots(2, 3, figsize=(18, 10))
@@ -152,9 +144,7 @@ plt.tight_layout()
 plt.savefig(os.path.join(REPORTS, 'correlation_heatmap.png'), dpi=150); plt.close()
 print("  Correlation heatmap saved * reports/correlation_heatmap.png")
 
-# ══════════════════════════════════════════════════════════════
 # STEP 4 — FEATURE SELECTION
-# ══════════════════════════════════════════════════════════════
 print("\n[STEP 4] Feature Selection *")
 feature_cols = [c for c in train_df.columns if c not in ['Provider','FraudLabel']]
 X = train_df[feature_cols]
@@ -173,9 +163,7 @@ print(f"  Train: {X_train.shape} | Val: {X_val.shape}")
 # Save feature list
 joblib.dump(selected_features, os.path.join(MODELS, 'selected_features.pkl'))
 
-# ══════════════════════════════════════════════════════════════
 # STEP 5 — MODEL COMPARISON (5-Fold CV)
-# ══════════════════════════════════════════════════════════════
 print("\n[STEP 5] Model Comparison (5-Fold CV) *")
 cv_results = compare_models(X_selected, y)
 
@@ -196,9 +184,7 @@ plt.tight_layout()
 plt.savefig(os.path.join(REPORTS, 'model_comparison.png'), dpi=150); plt.close()
 print("  Model comparison plot saved * reports/model_comparison.png")
 
-# ══════════════════════════════════════════════════════════════
 # STEP 6 — TRAIN BEST MODEL & EVALUATE
-# ══════════════════════════════════════════════════════════════
 print("\n[STEP 6] Training Best Model (XGBoost + SMOTE) *")
 best_model = train_best_model(X_train.copy(), y_train.copy(), use_smote=True)
 
@@ -208,9 +194,7 @@ auc, val_probs = evaluate(best_model, X_val, y_val, label='XGBoost')
 joblib.dump(best_model, os.path.join(MODELS, 'best_model.pkl'))
 print(f"  Model saved * models/best_model.pkl")
 
-# ══════════════════════════════════════════════════════════════
 # STEP 7 — SUBMISSION
-# ══════════════════════════════════════════════════════════════
 print("\n[STEP 7] Generating Submission File *")
 
 # Align test features to selected feature columns (fill missing with 0)

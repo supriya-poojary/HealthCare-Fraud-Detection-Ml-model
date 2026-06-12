@@ -36,7 +36,7 @@ os.makedirs(OUTPUTS, exist_ok=True)
 os.makedirs(REPORTS, exist_ok=True)
 
 
-# ─── Feature Selection ──────────────────────────────────────────────────────
+# Feature Selection
 def select_features(X_train, y_train, threshold=0.001):
     """Use Random Forest importance to select top features."""
     rf = RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1,
@@ -50,7 +50,7 @@ def select_features(X_train, y_train, threshold=0.001):
     return selected, importances.sort_values(ascending=False)
 
 
-# ─── Models to Compare ──────────────────────────────────────────────────────
+# Models to Compare
 def get_models():
     return {
         'Logistic Regression': LogisticRegression(
@@ -68,7 +68,7 @@ def get_models():
     }
 
 
-# ─── Cross-Validation Comparison ────────────────────────────────────────────
+# Cross-Validation Comparison
 def compare_models(X, y, cv=5):
     results = {}
     skf = StratifiedKFold(n_splits=cv, shuffle=True, random_state=42)
@@ -80,7 +80,7 @@ def compare_models(X, y, cv=5):
     return results
 
 
-# ─── Train Best Model ───────────────────────────────────────────────────────
+# Train Best Model
 def train_best_model(X_train, y_train, use_smote=True):
     if use_smote:
         print("  Applying SMOTE *")
@@ -105,7 +105,7 @@ def train_best_model(X_train, y_train, use_smote=True):
     return best
 
 
-# ─── Evaluation ─────────────────────────────────────────────────────────────
+# Evaluation
 def evaluate(model, X_test, y_test, label='XGBoost', save_dir=REPORTS):
     prob  = model.predict_proba(X_test)[:, 1]
     pred  = (prob >= 0.5).astype(int)
@@ -118,7 +118,7 @@ def evaluate(model, X_test, y_test, label='XGBoost', save_dir=REPORTS):
     print(f"  Avg Precision: {ap:.4f}")
     print(f"\nClassification Report:\n{classification_report(y_test, pred, target_names=['Non-Fraud','Fraud'])}")
 
-    # ── Confusion matrix plot ────────────────────────────────────────────────
+    # Confusion matrix plot
     cm  = confusion_matrix(y_test, pred)
     fig, axes = plt.subplots(1, 3, figsize=(18, 5))
     fig.suptitle(f'{label} — Evaluation', fontsize=14, fontweight='bold')
@@ -129,14 +129,14 @@ def evaluate(model, X_test, y_test, label='XGBoost', save_dir=REPORTS):
     axes[0].set_title('Confusion Matrix')
     axes[0].set_xlabel('Predicted'); axes[0].set_ylabel('Actual')
 
-    # ── ROC curve ───────────────────────────────────────────────────────────
+    # ROC curve
     fpr, tpr, _ = roc_curve(y_test, prob)
     axes[1].plot(fpr, tpr, color='darkorange', lw=2, label=f'AUC={auc:.3f}')
     axes[1].plot([0,1],[0,1],'k--')
     axes[1].set_xlabel('False Positive Rate'); axes[1].set_ylabel('True Positive Rate')
     axes[1].set_title('ROC Curve'); axes[1].legend()
 
-    # ── Precision-Recall curve ──────────────────────────────────────────────
+    # Precision-Recall curve
     prec, rec, _ = precision_recall_curve(y_test, prob)
     axes[2].plot(rec, prec, color='steelblue', lw=2, label=f'AP={ap:.3f}')
     axes[2].set_xlabel('Recall'); axes[2].set_ylabel('Precision')
@@ -149,7 +149,7 @@ def evaluate(model, X_test, y_test, label='XGBoost', save_dir=REPORTS):
     return auc, prob
 
 
-# ─── Feature Importance Plot ─────────────────────────────────────────────────
+# Feature Importance Plot
 def plot_feature_importance(importances, top_n=20, save_dir=REPORTS):
     top = importances.head(top_n)
     fig, ax = plt.subplots(figsize=(10, 8))
@@ -163,7 +163,7 @@ def plot_feature_importance(importances, top_n=20, save_dir=REPORTS):
     print(f"  Feature importance plot saved * {out}")
 
 
-# ─── Submission ──────────────────────────────────────────────────────────────
+# Submission
 def make_submission(model, X_test_feats, test_providers, name='Supriyo_Submission'):
     prob = model.predict_proba(X_test_feats)[:, 1]
     pred = pd.Series((prob >= 0.5).astype(int)).map({0: 'No', 1: 'Yes'})

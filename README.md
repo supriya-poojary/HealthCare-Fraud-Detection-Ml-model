@@ -1,14 +1,14 @@
-# Healthcare Provider Fraud Detection 🏥
+# Healthcare Provider Fraud Detection
 
-> **AI-powered system to detect fraudulent healthcare insurance providers using XGBoost + SMOTE**
+> **Machine Learning Pipeline for Healthcare Insurance Provider Fraud Detection**
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://your-app-url.streamlit.app)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://healthcare-fraud-detection-ml-model-dpsktk3gu9lcpxahv4gutv.streamlit.app/)
 
-## 🎯 Problem Statement
+## Problem Statement
 
 Healthcare fraud costs the US insurance industry over **$60 billion annually**. This project builds a machine learning pipeline to predict potentially fraudulent providers based on their Inpatient, Outpatient, and Beneficiary claims data.
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 fraud-detection/
@@ -32,7 +32,7 @@ fraud-detection/
 └── requirements.txt
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Install dependencies
 ```bash
@@ -59,7 +59,7 @@ This runs all 7 steps and generates:
 streamlit run app/streamlit_app.py
 ```
 
-## 📊 Methodology
+## Methodology
 
 | Step | Task | Details |
 |------|------|---------|
@@ -71,14 +71,14 @@ streamlit run app/streamlit_app.py
 | 6 | Evaluation | ROC-AUC, Confusion Matrix, P-R Curve |
 | 7 | Deployment | Streamlit app + CSV submission |
 
-## 🤖 Models Compared
+## Models Compared
 
 - Logistic Regression (baseline)
 - Random Forest
 - **XGBoost** ← Best performer
 - LightGBM
 
-## 📈 Key Engineered Features
+## Key Engineered Features
 
 - `Total_Claims`, `IP/OP_TotalClaims`
 - `IP_AvgReimbursed`, `IP_MaxReimbursed`
@@ -87,20 +87,20 @@ streamlit run app/streamlit_app.py
 - `Bene_AvgChronicCond`, `Bene_DeadCount`
 - `IP_OP_ClaimRatio`, `Avg_Reimbursed_Per_Claim`
 
-## ⚙️ Handling Class Imbalance
+## Handling Class Imbalance
 
 - `class_weight='balanced'` on all models
 - **SMOTE** (Synthetic Minority Oversampling) on best model
 - Threshold tuning for optimal F1
 
-## 📜 Citations & References
+## Citations & References
 
 - [CMS Medicare Provider Data](https://data.cms.gov/)
 - [NHCAA — National Health Care Anti-Fraud Association](https://www.nhcaa.org/)
 - Chen, T., & Guestrin, C. (2016). XGBoost: A Scalable Tree Boosting System. KDD.
 - Chawla, N. V. et al. (2002). SMOTE: Synthetic Minority Over-sampling Technique. JAIR.
 
-## 🔒 Privacy
+## Privacy
 
 This data is confidential and not shared or published publicly.
 
